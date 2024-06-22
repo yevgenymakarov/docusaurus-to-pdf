@@ -1,21 +1,8 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-# This workflow will download a prebuilt Ruby version, install dependencies and run tests with Rake
-# For more information see: https://github.com/marketplace/actions/setup-ruby-jruby-and-truffleruby
+# https://docs.cavalry.scenegroup.co/
 
-name: CI Test
+name: Build PDF
 
-on:
-  push:
-    branches:
-      - '**'
-    tags:
-      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
-  pull_request:
-    branches:
-      - '**'
+on: workflow_dispatch
 
 env:
   PRINCE_VER: 15.3
@@ -48,64 +35,11 @@ jobs:
         yes "" | sudo ./install.sh
 
     - name: Build PDF
-      run: bun run test
+      run: bun run index.ts -u https://docs.cavalry.scenegroup.co/
 
     - name: Upload results
       uses: actions/upload-artifact@v4
       with:
         name: result
-        path: pdf/docusaurus.io-docs.pdf
+        path: pdf/docs.cavalry.scenegroup.co.pdf
         if-no-files-found: error
-
-    # Start build Docker image
-    - name: Set up QEMU
-      uses: docker/setup-qemu-action@v3
-
-    - name: Set up Docker Buildx
-      id: buildx
-      uses: docker/setup-buildx-action@v3
-
-    - name: Available platforms
-      run: echo ${{ steps.buildx.outputs.platforms }}
-
-    - name: Log in to Docker Hub
-      uses: docker/login-action@v3
-      with:
-        username: ${{ secrets.DOCKER_USER }}
-        password: ${{ secrets.DOCKER_PASS }}
-
-    - name: Login to GitHub Container Registry
-      uses: docker/login-action@v3
-      with:
-        registry: ghcr.io
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
-
-    - name: Docker meta
-      id: meta
-      uses: docker/metadata-action@v5
-      with:
-        images: |
-          ${{ env.DOCKERHUB_SLUG }}
-          ${{ env.GHCR_SLUG }}
-        tags: |
-          type=edge
-          type=schedule
-          type=ref,event=branch
-          type=ref,event=pr
-          type=semver,pattern={{version}}
-          type=semver,pattern={{major}}.{{minor}}
-          type=semver,pattern={{major}}
-          type=sha
-
-    - name: Build and push
-      uses: docker/bake-action@v4
-      with:
-        files: |
-          ./docker-bake.hcl
-          ${{ steps.meta.outputs.bake-file }}
-        targets: build-all
-        push: ${{ github.event_name != 'pull_request' }}
-        set: |
-          *.cache-from=type=gha
-          *.cache-to=type=gha,mode=max
