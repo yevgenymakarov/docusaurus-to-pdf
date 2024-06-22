@@ -63,10 +63,22 @@
   .details_lb9f {
     background: none;
     box-shadow: none !important;
-    border: 0px !important;
+    border: 0 !important;
   }
 
   .details_lb9f > summary {
     display: none;
+  }
+
+  .details_lb9f > div {
+    display: block;
+    overflow: visible;
+    height: auto;
+  }
+
+  .collapsibleContent_i85q {
+    border-top: none;
+    margin-top: 0;
+    padding-top: 0;
   }
 }
