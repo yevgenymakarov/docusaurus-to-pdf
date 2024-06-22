@@ -25,4 +25,48 @@
   .footer {
     display: none !important;
   }
+
+  /* docs.cavalry.scenegroup.co */
+
+  figure:has(#ytplayer) {
+    text-align: center;
+  }
+
+  div:has(> #ytplayer),
+  div:has(> iframe[src*="scenery.io"]) {
+    display: inline;
+    color: #8d949e;
+    background: #f2f2f2;
+    padding: 8px 12px !important;
+    border-radius: 4px;
+  }
+
+  div:has(> #ytplayer)::before {
+    content: "youtube video";
+  }
+  div:has(> iframe[src*="scenery.io"])::before {
+    content: "scenery.io content";
+  }
+
+  #ytplayer,
+  iframe[src*="scenery.io"] {
+    display: none;
+  }
+
+  .tabItem_Ymn6 + .tabItem_Ymn6 {
+    display: block;
+    border-top: 2px solid #2fcd71;
+    margin-top: 20px;
+    padding-top: 20px;
+  }
+
+  .details_lb9f {
+    background: none;
+    box-shadow: none !important;
+    border: 0px !important;
+  }
+
+  .details_lb9f > summary {
+    display: none;
+  }
 }
