@@ -26,6 +26,12 @@
     display: none !important;
   }
 
+  /* https://github.com/signcl/docusaurus-prince-pdf/issues/31 */
+  code[class*='codeBlockLines'] {
+    float: none;
+    display: block;
+  }
+
   /* docs.cavalry.scenegroup.co */
 
   figure:has(#ytplayer) {
@@ -42,10 +48,10 @@
   }
 
   div:has(> #ytplayer)::before {
-    content: "youtube video";
+    content: "embedded youtube video";
   }
   div:has(> iframe[src*="scenery.io"])::before {
-    content: "scenery.io content";
+    content: "scenery.io embedded content";
   }
 
   #ytplayer,
@@ -61,7 +67,7 @@
   }
 
   .details_lb9f {
-    background: none;
+    background: none !important;
     box-shadow: none !important;
     border: 0 !important;
   }
@@ -70,15 +76,9 @@
     display: none;
   }
 
-  .details_lb9f > div {
-    display: block;
-    overflow: visible;
-    height: auto;
-  }
-
   .collapsibleContent_i85q {
-    border-top: none;
-    margin-top: 0;
-    padding-top: 0;
+    border-top: none !important;
+    margin-top: 0 !important;
+    padding-top: 0 !important;
   }
 }
