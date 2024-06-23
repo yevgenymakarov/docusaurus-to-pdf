@@ -35,7 +35,7 @@ jobs:
         yes "" | sudo ./install.sh
 
     - name: Build PDF
-      run: bun run index.ts -u https://docs.cavalry.scenegroup.co/
+      run: bun run index.ts --include-index -u https://docs.cavalry.scenegroup.co/
 
     - name: Upload results
       uses: actions/upload-artifact@v4
